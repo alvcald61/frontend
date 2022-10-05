@@ -1,24 +1,23 @@
-import logo from './logo.svg';
+import React from "react";
+import TodoForm from "./components/TodoForm";
+import TodoList from "./components/TodoList";
+import useTodos from "./hooks/Todos";
+import LoginModal from "./components/LoginModal";
+import Login from "./components/Login";
+import useLogin from "./hooks/Login";
 import './App.css';
 
 function App() {
+  const { isLogin, user, handleLogin } = useLogin();
+  const {todos, addTodo, completeTodo} = useTodos(user);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {!isLogin && <LoginModal >
+          <Login handleLogin={handleLogin}/>
+      </LoginModal>}
+      <TodoForm todos = {todos} addTodo={addTodo}/>
+      <TodoList todos = {todos} completeTodo={completeTodo}/>
+    </>
   );
 }
 

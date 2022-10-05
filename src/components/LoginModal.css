@@ -1,0 +1,38 @@
+.modal {
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000000;
+  }
+
+.close-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 10px 10px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.close-icon:hover {
+  filter: invert(1)
+
+}
+
+
+.modal-content {
+  background: rgb(188, 188, 188);
+  width: 400px;
+  padding: 10px 20px;
+  height: 50vh;
+  margin: 20vh auto;
+  position: relative;
+  border-radius:10px;
+}
