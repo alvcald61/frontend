@@ -13,6 +13,9 @@ const TodoList = ({todos, completeTodo}) => {
         <h2 className="list-title">
             To-Do's
         </h2>
+        <h3>
+            
+        </h3>
         <div className="filters">
             <button onClick={handleClick} className={selected === "All"?"active":"btn-grad"}>All</button>
             <button onClick={handleClick} className={selected === "Complete"?"active":"btn-grad"}>Complete</button>

@@ -8,14 +8,14 @@ import useLogin from "./hooks/Login";
 import './App.css';
 
 function App() {
-  const { isLogin, user, handleLogin } = useLogin();
+  const { isLogin, user, error, handleLogin, handleGoogleLogin } = useLogin();
   const {todos, addTodo, completeTodo} = useTodos(user);
   return (
     <>
       {!isLogin && <LoginModal >
-          <Login handleLogin={handleLogin}/>
+          <Login handleLogin={handleLogin} error = {error} handleGoogleLogin={handleGoogleLogin}/>
       </LoginModal>}
-      <TodoForm todos = {todos} addTodo={addTodo}/>
+      <TodoForm todos = {todos} addTodo={addTodo} isLogin={isLogin} user = {user}/>
       <TodoList todos = {todos} completeTodo={completeTodo}/>
     </>
   );

@@ -1,9 +1,19 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import "./TodoForm.css";
 
-function TodoForm({todos, addTodo}) {
+function TodoForm({todos, addTodo, isLogin}) {
   const [message, setMessage] = useState(null);
+  const [user, setUser] = useState(null);
+  //TODO: pass user from hook to this component 
+  useEffect(() => {
+    console.log("ejecuta")
+    const localUser = window.sessionStorage.getItem('user');
+    if(localUser){
+      setUser(JSON.parse(localUser));
+    }
+  }, [isLogin])
+
   const validate = (values) => {
     const error = {};
     if (!values.title) {
@@ -16,12 +26,13 @@ function TodoForm({todos, addTodo}) {
     return error;
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, {resetForm}) => {
     const postData = async () => {
-      const response = await fetch("http://localhost:8080/api/v1/users/addTodo/test", {
+      const response = await fetch(`http://localhost:8080/api/v1/users/addTodo/${user.email}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${user.jwt}`
         },
         body: JSON.stringify(values), 
         });
@@ -29,6 +40,7 @@ function TodoForm({todos, addTodo}) {
         if(response.status===201){
           addTodo(data.todos);
           setMessage("Todo Added Successfully");
+          resetForm();
         }
         else{
           setMessage("Error Occurred");
@@ -50,6 +62,7 @@ function TodoForm({todos, addTodo}) {
         <h1 className="title">
         To-Do List
       </h1>
+      <h3>{`Welcome back ${user?.name || "" }`}</h3>
           <div className="align-content">
             <label className="form-label" htmlFor="title">
               Title:
